@@ -1,0 +1,471 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Люблю тебя</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #0a0a23;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            flex-direction: column;
+        }
+
+        .heart {
+            font-size: 80px;
+            color: #ff4d4d;
+            cursor: pointer;
+            user-select: none;
+            animation: beat 1s infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #fff;
+            z-index: 2;
+        }
+
+        .click-text {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #ff4d4d;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .question {
+            display: none;
+            margin-top: 20px;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        .answers {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .answers button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 10px;
+            background-color: #ff4d4d;
+            color: white;
+            cursor: pointer;
+        }
+
+        .final-content {
+            display: none;
+            text-align: center;
+        }
+
+        .rose-and-ring {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .rose {
+            font-size: 100px;
+            color: #ff4d4d;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .ring {
+            font-size: 80px;
+            color: #ff4d4d;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .compliment {
+            font-size: 24px;
+            color: #fff;
+            margin-top: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .stars-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .stars-background span {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: falling-stars linear infinite;
+        }
+
+        @keyframes falling-stars {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        .heart-firework {
+            position: absolute;
+            font-size: 20px;
+            color: #ff4d4d;
+            animation: heartFirework 1s ease-out forwards;
+        }
+
+        @keyframes heartFirework {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+        }
+
+        .cheese-button {
+            display: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            background-color: #ffcc00;
+            color: #0a0a23;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+
+        .slot-machine {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        .slot-machine .win-text {
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .slot-machine .machine {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            background-color: #444;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.6);
+        }
+
+        .slot-machine .slots {
+            display: flex;
+            gap: 15px;
+            background-color: #333;
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .slot-machine .slots div {
+            font-size: 50px;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .slot-machine .lever {
+            width: 40px;
+            height: 100px;
+            background: linear-gradient(45deg, #ff4d4d, #cc0000);
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .slot-machine .lever::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: #ffcc00;
+            border-radius: 50%;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .slot-machine .lever.pulling {
+            animation: leverPull 0.3s ease forwards;
+        }
+
+        @keyframes leverPull {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(20px); }
+            100% { transform: translateY(0); }
+        }
+
+        .slot-machine .lever.disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            background: linear-gradient(45deg, #999, #666);
+        }
+
+        .win-message {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 24px;
+            color: #fff;
+            margin-top: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .congrats-text {
+            font-size: 28px;
+            color: #ffcc00;
+        }
+
+        .prize-text {
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="click-text">Жмяк)</div>
+        <div class="heart" id="heart">❤️</div>
+        <div class="message">Люблю тебя, сладкая ❤️‍🔥🙊</div>
+    </div>
+
+    <div class="question" id="question">Будешь моей китей?</div>
+    <div class="answers" id="answers">
+        <button id="yes">Да</button>
+        <button id="no">Нет</button>
+    </div>
+
+    <div class="final-content" id="final-content">
+        <div class="rose-and-ring">
+            <div class="rose">🌹</div>
+            <div class="ring">💎</div>
+        </div>
+        <div class="compliment">Ты прелесть✨)))</div>
+    </div>
+
+    <button class="cheese-button" id="cheese-button">Сырок</button>
+
+    <div class="slot-machine" id="slot-machine">
+        <div class="win-text">Выиграй, чтобы получить сырок✨❤️)))</div>
+        <div class="machine">
+            <div class="slots">
+                <div id="slot1">🌹</div>
+                <div id="slot2">💎</div>
+                <div id="slot3">✨</div>
+            </div>
+            <div class="lever" id="lever"></div>
+        </div>
+        <div class="win-message" id="win-message">
+            <div class="congrats-text">Поздравляю!</div>
+            <div class="prize-text">Ты выиграла сырок! 🎉❤️</div>
+        </div>
+    </div>
+
+    <div class="stars-background" id="stars-background"></div>
+
+    <script>
+        const heart = document.getElementById('heart');
+        const question = document.getElementById('question');
+        const answers = document.getElementById('answers');
+        const finalContent = document.getElementById('final-content');
+        const starsBackground = document.getElementById('stars-background');
+        const yesButton = document.getElementById('yes');
+        const noButton = document.getElementById('no');
+        const cheeseButton = document.getElementById('cheese-button');
+        const slotMachine = document.getElementById('slot-machine');
+        const lever = document.getElementById('lever');
+        const winMessage = document.getElementById('win-message');
+        const slot1 = document.getElementById('slot1');
+        const slot2 = document.getElementById('slot2');
+        const slot3 = document.getElementById('slot3');
+
+        const symbols = ['🌹', '💎', '✨'];
+        let attempts = 0;
+        let isSpinning = false;
+
+        function showQuestion(event) {
+            event.preventDefault();
+            if (navigator.vibrate) navigator.vibrate(100);
+            
+            document.querySelector('.click-text').style.display = 'none';
+            document.querySelector('.heart').style.display = 'none';
+            document.querySelector('.message').style.display = 'none';
+            
+            question.style.display = 'block';
+            answers.style.display = 'block';
+            createHeartFireworks();
+        }
+
+        function createHeartFireworks() {
+            for (let i = 0; i < 30; i++) {
+                const heartFirework = document.createElement('div');
+                heartFirework.classList.add('heart-firework');
+                heartFirework.innerHTML = '❤️';
+                heartFirework.style.left = `${Math.random() * 100}vw`;
+                heartFirework.style.top = `${Math.random() * 100}vh`;
+                heartFirework.style.setProperty('--x', `${Math.random() * 200 - 100}px`);
+                heartFirework.style.setProperty('--y', `${Math.random() * 200 - 100}px`);
+                document.body.appendChild(heartFirework);
+                setTimeout(() => heartFirework.remove(), 1000);
+            }
+        }
+
+        function showFinalContent(event) {
+            event.preventDefault();
+            question.style.display = 'none';
+            answers.style.display = 'none';
+            
+            finalContent.style.display = 'flex';
+            finalContent.style.alignItems = 'center';
+            finalContent.style.justifyContent = 'center';
+            finalContent.style.flexDirection = 'column';
+            createStarsBackground();
+            cheeseButton.style.display = 'block';
+        }
+
+        function createStarsBackground() {
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('span');
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.animationDuration = `${Math.random() * 5 + 2}s`;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                starsBackground.appendChild(star);
+            }
+        }
+
+        function moveNoButton() {
+            const x = Math.random() * (window.innerWidth - noButton.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noButton.offsetHeight);
+            noButton.style.position = 'absolute';
+            noButton.style.left = `${x}px`;
+            noButton.style.top = `${y}px`;
+        }
+
+        function startSlotMachine() {
+            finalContent.style.display = 'none';
+            cheeseButton.style.display = 'none';
+            slotMachine.style.display = 'flex';
+            attempts = 0;
+            slot1.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            slot2.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            slot3.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        }
+
+        async function spinSlots() {
+            if (isSpinning) return;
+            isSpinning = true;
+            attempts++;
+            
+            lever.classList.add('pulling', 'disabled');
+            
+            const spinDuration = 2000;
+            const startTime = Date.now();
+            
+            const fastSpin = setInterval(() => {
+                slot1.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                slot2.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                slot3.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            }, 50);
+
+            await new Promise(resolve => setTimeout(resolve, spinDuration));
+            clearInterval(fastSpin);
+            
+            const result = generateResult();
+            slot1.textContent = result[0];
+            slot2.textContent = result[1];
+            slot3.textContent = result[2];
+            
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            lever.classList.remove('pulling', 'disabled');
+            isSpinning = false;
+            
+            checkWin();
+        }
+
+        function generateResult() {
+            if (attempts >= 2 && Math.random() < 0.4) {
+                return ['❤️', '❤️', '❤️'];
+            } else {
+                let res;
+                do {
+                    res = [
+                        symbols[Math.floor(Math.random() * symbols.length)],
+                        symbols[Math.floor(Math.random() * symbols.length)],
+                        symbols[Math.floor(Math.random() * symbols.length)]
+                    ];
+                } while (res[0] === res[1] && res[1] === res[2]);
+                return res;
+            }
+        }
+
+        function checkWin() {
+            if (slot1.textContent === '❤️' && slot2.textContent === '❤️' && slot3.textContent === '❤️') {
+                winMessage.style.display = 'flex';
+                createHeartFireworks();
+            } else {
+                winMessage.style.display = 'none';
+            }
+        }
+
+        // Event Listeners
+        heart.addEventListener('click', showQuestion);
+        heart.addEventListener('touchstart', (e) => { e.preventDefault(); showQuestion(e); }, { passive: false });
+        yesButton.addEventListener('click', showFinalContent);
+        yesButton.addEventListener('touchstart', (e) => { e.preventDefault(); showFinalContent(e); }, { passive: false });
+        noButton.addEventListener('click', moveNoButton);
+        noButton.addEventListener('touchstart', (e) => { e.preventDefault(); moveNoButton(); }, { passive: false });
+        cheeseButton.addEventListener('click', startSlotMachine);
+        lever.addEventListener('click', spinSlots);
+    </script>
+</body>
+</html>
